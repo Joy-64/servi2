@@ -1,0 +1,173 @@
+<!doctype html>
+<!--
+  CargaDeTrabajo.html
+  Formulario para registrar un trabajo realizado.
+  Sin JavaScript: al apretar el botón los datos se envían por POST a CargaDeTrabajo.php,
+  que valida, calcula la mano de obra y el total, y muestra un resumen.
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cargar trabajo | ServiTrack</title>
+    <link rel="icon" href="./img/logo3.0.jpeg" />
+    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="stylesheet" href="css/formularios.css" />
+  </head>
+  <body>
+    <!-- Cabecera: logo y menú, igual en todas las páginas -->
+    <header>
+      <div class="header-logo">
+        <a href="inicio.html">
+          <img src="./img/logo2.0.png" width="200px" height="100px" alt="Logo ServiTrack" />
+        </a>
+      </div>
+      <button id="menu-btn"><img src="./img/menu.png" width="20px" height="20px" alt="menu" /></button>
+      <nav class="header-nav" id="menu">
+        <ul>
+          <li><a class="items-menu" href="/php/panel.php">Panel</a></li>
+          <li><a class="items-menu" href="/CargaDeTrabajo.html">Cargar trabajo</a></li>
+          <li><a class="items-menu" href="/CargaDeClientes.html">Cargar cliente</a></li>
+          <li><a class="items-menu" href="/php/trabajos.php">Trabajos</a></li>
+        </ul>
+      </nav>
+      <div class="header-boton"><button class="boton"><a class="login" href="">Acceso</a></button></div>
+    </header>
+
+    <main class="formulario">
+      <!-- Atajos siempre visibles (el menú de arriba se esconde en pantallas angostas) -->
+      <p class="atajos"><a href="/php/panel.php">← Panel</a> <a href="/php/CargaDeTrabajo.php">Ver todos los trabajos</a></p>
+      <h1>Cargar trabajo</h1>
+
+      <!-- enctype="multipart/form-data" es obligatorio cuando el formulario sube archivos -->
+      <form action="/php/CargaDeTrabajo.php" method="post" enctype="multipart/form-data">
+
+        <!-- Sección 1: cliente y trabajo -->
+        <fieldset>
+          <legend>Cliente y trabajo</legend>
+
+          <div class="campo">
+            <label for="IdCliente">Cliente *</label>
+            <!-- El value de cada opción es el id del cliente (lo que se guarda en la base).
+                 Estas opciones son de ejemplo; después las genera PHP desde la tabla clientes. -->
+            <select name="IdCliente" id="IdCliente" required>
+              <option value="">Elegí un cliente</option>
+              <option value="1">Marta Gómez</option>
+              <option value="2">Pedro Díaz</option>
+              <option value="3">Lucía Fernández</option>
+              <option value="4">Carlos Ruiz</option>
+              <option value="5">Ana Sosa</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="Ubicacion">Ubicación</label>
+            <input type="text" name="Ubicacion" id="Ubicacion" placeholder="Calle, número, ciudad" />
+          </div>
+
+          <div class="campo">
+            <label for="TrabajoRealizado">Trabajo realizado *</label>
+            <textarea name="TrabajoRealizado" id="TrabajoRealizado" rows="3" required></textarea>
+          </div>
+
+          <div class="campo">
+            <label>Tipo de trabajo *</label>
+            <!-- name con [] : PHP recibe una lista con todos los tipos marcados.
+                 El value es el id del oficio en la tabla oficios. -->
+            <div class="opciones">
+              <label><input type="checkbox" name="TipoDeTrabajo[]" value="2" /> Plomería</label>
+              <label><input type="checkbox" name="TipoDeTrabajo[]" value="8" /> Gas</label>
+              <label><input type="checkbox" name="TipoDeTrabajo[]" value="1" /> Electricidad</label>
+              <label><input type="checkbox" name="TipoDeTrabajo[]" value="3" /> Albañilería</label>
+              <label><input type="checkbox" name="TipoDeTrabajo[]" value="5" /> Pintura</label>
+              <label><input type="checkbox" name="TipoDeTrabajo[]" value="4" /> Carpintería</label>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label for="Estado">Estado</label>
+            <select name="Estado" id="Estado">
+              <option value="0">En curso</option>
+              <option value="1">Terminado</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <!-- Sección 2: fechas y horas -->
+        <fieldset>
+          <legend>Fechas y horas</legend>
+          <div class="fila">
+            <div class="campo">
+              <label for="Desde">Desde *</label>
+              <input type="date" name="Desde" id="Desde" required />
+            </div>
+            <div class="campo">
+              <label for="Hasta">Hasta</label>
+              <input type="date" name="Hasta" id="Hasta" />
+            </div>
+            <div class="campo">
+              <label for="Horas">Horas trabajadas</label>
+              <!-- step="0.5" permite medias horas -->
+              <input type="number" name="Horas" id="Horas" min="0" step="0.5" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Sección 3: presupuesto -->
+        <fieldset>
+          <legend>Presupuesto</legend>
+          <div class="campo">
+            <label for="Presupuesto">Detalle de materiales y trabajo</label>
+            <textarea name="Presupuesto" id="Presupuesto" rows="4" placeholder="Materiales usados, precios, etc."></textarea>
+          </div>
+          <!-- Estos dos los escribe la persona. La mano de obra (horas × precio) y el total
+               NO están acá: los calcula PHP cuando se envía el formulario -->
+          <div class="fila">
+            <div class="campo">
+              <label for="PrecioHora">Precio por hora ($)</label>
+              <input type="number" name="PrecioHora" id="PrecioHora" min="0" step="0.01" />
+            </div>
+            <div class="campo">
+              <label for="Materiales">Materiales ($)</label>
+              <input type="number" name="Materiales" id="Materiales" min="0" step="0.01" />
+            </div>
+          </div>
+          <p>La mano de obra (horas × precio por hora) y el total se calculan al enviar.</p>
+        </fieldset>
+
+        <!-- Sección 4: comprobantes -->
+        <fieldset>
+          <legend>Comprobantes</legend>
+          <div class="campo">
+            <label for="Comprobante">Fotos o PDF</label>
+            <!-- multiple: permite elegir varios archivos. Comprobante[] llega a PHP como lista -->
+            <input type="file" name="Comprobante[]" id="Comprobante" accept="image/*,.pdf" multiple />
+          </div>
+        </fieldset>
+
+        <div class="botones">
+          <!-- Cuando se conecte la base, este botón pasa a decir "Guardar trabajo" -->
+          <button type="submit" class="boton">Calcular y revisar</button>
+          <button type="reset" class="boton boton-sec">Limpiar</button>
+        </div>
+      </form>
+    </main>
+
+    <!-- Pie de página, igual en todas las páginas -->
+    <footer class="footer">
+      <div class="footer-logo">
+        <a href="inicio.html">
+          <img src="./img/logo 2.1.png" width="100px" height="100px" alt="Logo ServiTrack" />
+        </a>
+      </div>
+      <nav class="foot-enlace">
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="quienes-somos.html">Quienes somos</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <p class="derechos">&copy; 2026 | ServiTrack. Todos los derechos reservados.</p>
+    </footer>
+
+  </body>
+</html>

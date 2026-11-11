@@ -1,0 +1,183 @@
+/* panel.css
+   Estilos de panel.php: contadores, tarjetas de acceso y listas de trabajos.
+   Va DESPUÉS de style.css porque usa sus variables de color y tipografía.
+
+   IDEA CENTRAL DE ESTA VERSIÓN (diseño adaptable, "responsive"):
+   en vez de decir "siempre 3 columnas" y después corregir con @media,
+   le decimos al navegador "poné tantas columnas como entren" (auto-fit + minmax).
+   Así el panel se acomoda solo a cualquier ancho y no sobran espacios en blanco.
+
+   NOTA: los nombres de clase de acá ahora coinciden con los que usa panel.php
+   (antes había diferencias, por ejemplo dato-pend / dato-pendiente, y por eso
+   algunos estilos no se aplicaban). */
+
+
+/* ---------- Contenedor central ---------- */
+.panel {
+    /* Ancho máximo: en monitores grandes no se estira más que esto */
+    max-width: 1280px;
+
+    /* clamp(mínimo, ideal, máximo): el margen de arriba/abajo crece con la pantalla
+       (3vw = 3% del ancho) pero nunca baja de 1rem ni pasa de 2rem.
+       "auto" a los costados centra el contenedor. */
+    margin: clamp(1rem, 3vw, 2rem) auto;
+
+    /* Espacio a los costados: también se adapta (12px mínimo, 32px máximo) */
+    padding: 0 clamp(.75rem, 3vw, 2rem);
+
+    font-family: var(--texto);
+    color: var(--negro-suave);
+}
+
+/* Títulos: panel.php usa <h1> y <h2> sin clase, por eso se apunta a .panel h1 / .panel h2 */
+.panel h1 {
+    font-family: var(--titulos);
+    color: var(--azul-oscuro);
+    margin-bottom: 1rem;
+}
+
+.panel h2 {
+    font-family: var(--subtitulo);
+    color: var(--azul-oscuro);
+    font-size: 1.15rem;
+    margin-bottom: .75rem;
+}
+
+
+/* ---------- Resumen: los 3 contadores ---------- */
+.resumen {
+    display: grid;
+
+    /* repeat(auto-fit, minmax(200px, 1fr)):
+         minmax(200px, 1fr) = cada columna mide MÍNIMO 200px y se reparte el espacio sobrante (1fr)
+         auto-fit           = el navegador crea tantas columnas como entren
+       Resultado: 3 columnas en pantalla grande, 2 en tablet, 1 en celular. Sin @media. */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.dato {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco-suave);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;     /* el número arriba y el texto abajo */
+}
+
+.dato strong {
+    font-family: var(--titulos);
+    /* El número también se adapta: entre 1.6rem y 2.2rem */
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    line-height: 1.1;
+}
+
+/* Contador de pendientes: se destaca en violeta (clase que usa panel.php) */
+.dato-pendiente {
+    background-color: var(--violeta);
+}
+
+
+/* ---------- Accesos rápidos: tarjetas clicables ---------- */
+.accesos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));   /* misma idea que .resumen */
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.acceso {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    background-color: var(--blanco-suave);
+    border: 2px solid var(--azul-claro);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    color: var(--gris-oscuro);      /* color del texto descriptivo */
+}
+
+/* El título de la tarjeta es un <b> dentro del enlace */
+.acceso b {
+    font-family: var(--subtitulo);
+    font-size: 1.1rem;
+    color: var(--azul-oscuro);
+}
+
+/* Al pasar el mouse o navegar con teclado, la tarjeta se pone verde */
+.acceso:hover,
+.acceso:focus-visible {
+    background-color: var(--verde-transparente);
+    border-color: var(--verde);
+    transition: 300ms;
+}
+
+/* Contorno visible al navegar con la tecla Tab (accesibilidad) */
+.acceso:focus-visible {
+    outline: 3px solid var(--azul-intermedio);
+    outline-offset: 2px;
+}
+
+
+/* ---------- Listas: pendientes y últimos trabajos ---------- */
+.listas {
+    display: grid;
+
+    /* min(100%, 300px) evita que la columna sea más ancha que la pantalla en celulares
+       muy angostos (menos de 300px). Con 2 listas: 2 columnas en pantalla grande, 1 en chica. */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 1rem;
+
+    /* start = cada caja mide lo que mide su contenido.
+       Antes la caja corta se estiraba hasta igualar a la larga y quedaba un hueco blanco. */
+    align-items: start;
+
+    margin-bottom: 1.5rem;
+}
+
+.caja {
+    background-color: var(--blanco-suave);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+}
+
+/* Cada trabajo de la lista (<li>). En panel.php lleva: <b> cliente, <span> descripción, <span> fecha y estado */
+.caja li {
+    display: flex;
+    flex-wrap: wrap;                /* si no entra en un renglón, baja al siguiente */
+    align-items: center;
+    gap: .15rem .75rem;
+    padding: .6rem 0;
+    border-bottom: 1px solid var(--gris-claro);
+    color: var(--gris-oscuro);
+}
+
+.caja li:last-child {
+    border-bottom: none;            /* el último no lleva línea */
+}
+
+/* El nombre del cliente ocupa todo el renglón (flex-basis 100%) y va más oscuro */
+.caja li b {
+    flex: 1 1 100%;
+    color: var(--negro-suave);
+}
+
+/* Etiquetas de estado (clases que usa panel.php) */
+.estado {
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-family: var(--subtitulo);
+    font-size: .85rem;
+    white-space: nowrap;            /* que la etiqueta no se parta en dos renglones */
+}
+
+.estado-terminado {
+    background-color: var(--verde-transparente);
+    color: var(--negro-suave);
+}
+
+.estado-curso {
+    background-color: var(--violeta);
+    color: var(--blanco-suave);
+}

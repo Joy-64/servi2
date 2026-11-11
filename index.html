@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiTrack | Tus trabajos, bajo control</title>
+    <link rel="icon" href="./img/logo3.0.jpeg">
+    <link rel="stylesheet" href="./css/style.css">
+    <!--LINKS para que funcione el mapa-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@2.4.0/dist/Control.Geocoder.css" />
+</head>
+
+<body>
+    <!--ACA esta la cabecera-->
+    <header class="cabecera">
+        <a class="son-grid1 marca" href="#inicio">
+            <span class="marca-icono"><img src="./img/logo3.0.jpeg" alt=""></span>
+            <span class="marca-texto">Servi<b>Track</b></span>
+        </a>
+        <button id="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="son-grid2" id="menu">
+            <ul>
+                <li><a class="items-menu" href="#quienes">¿Quiénes somos?</a></li>
+                <li><a class="items-menu" href="#trabajo">Nuestro trabajo</a></li>
+                <li><a class="items-menu" href="#demo">Demo</a></li>
+                <li><a class="items-menu" href="#contacto">Contacto</a></li>
+                <li><a class="items-menu" href="panel.php">Panel</a></li>
+                <li><a class="items-menu" href="CargaDeTrabajo.html">Cargar trabajo</a></li>
+                <li><a class="items-menu" href="CargaDeClientes.html">Cargar cliente</a></li>
+                <li><a class="items-menu" href="trabajos.php">Trabajos</a></li>
+                <li class="solo-movil"><a class="boton" href="./acceso.php">Acceso</a></li>
+            </ul>
+        </nav>
+        <div class="son-grid3"><a class="boton" href="./acceso.php">Acceso</a></div>
+    </header>
+    <!--ACA TERMINA-->
+
+    <main id="inicio">
+        <!--ACA EMPIEZA EL CARRUSEL-->
+        <section class="carrusel" aria-label="ServiTrack a tu alcance">
+            <div class="carrusel-contenedor" id="carrusel">
+
+                <article class="carrusel-slide activo">
+                    <img src="./img/OFICIOS 1.jpg" alt="Nuestros Profesionales">
+                    <div class="carrusel-texto">
+                        <span class="etiqueta">Profesionales verificados</span>
+                        <h2>A tu servicio</h2>
+                        <p>Conectamos personas con trabajadores de confianza</p>
+                        <a class="boton boton-grande" href="#trabajo">Conocé más</a>
+                    </div>
+                </article>
+
+                <article class="carrusel-slide">
+                    <img src="./img/oficio2.jpg" alt="Trabajador utilizando herramientas">
+                    <div class="carrusel-texto">
+                        <span class="etiqueta">En Rosario</span>
+                        <h2>Servicios cerca de vos</h2>
+                        <p>Buscá profesionales disponibles en tu zona</p>
+                        <a class="boton boton-grande" href="#demo">Ver el mapa</a>
+                    </div>
+                </article>
+
+                <article class="carrusel-slide">
+                    <img src="./img/OFICIO3.jpg" alt="Cliente satisfecho con un servicio">
+                    <div class="carrusel-texto">
+                        <span class="etiqueta">Todo en un lugar</span>
+                        <h2>Tus trabajos, bajo control</h2>
+                        <p>Organizá y seguí cada servicio desde un solo lugar</p>
+                        <a class="boton boton-grande" href="./registro.php">Registrate gratis</a>
+                    </div>
+                </article>
+
+                <button id="slideAnterior" class="carrusel-flecha carrusel-anterior" type="button"
+                    aria-label="Imagen anterior">&#10094;</button>
+                <button id="slideSiguiente" class="carrusel-flecha carrusel-siguiente" type="button"
+                    aria-label="Imagen siguiente">&#10095;</button>
+
+                <div class="carrusel-puntos" id="carruselPuntos" role="tablist" aria-label="Elegir imagen"></div>
+                <div class="carrusel-progreso"><span id="carruselBarra"></span></div>
+            </div>
+        </section>
+        <!--ACA TERMINA EL CARRUSEL-->
+
+        <!--QUIENES SOMOS-->
+        <section class="seccion" id="quienes">
+            <div class="seccion-cabeza">
+                <span class="etiqueta etiqueta-clara">¿Quiénes somos?</span>
+                <h2>Una red de oficios pensada para tu barrio</h2>
+                <p>ServiTrack une a quienes necesitan un trabajo con profesionales de confianza de la zona, y
+                    permite seguir cada servicio de principio a fin.</p>
+            </div>
+            <div class="numeros">
+                <div><strong>+120</strong><span>profesionales</span></div>
+                <div><strong>15</strong><span>rubros</span></div>
+                <div><strong>4.8★</strong><span>valoración promedio</span></div>
+            </div>
+        </section>
+
+        <!--NUESTRO TRABAJO-->
+        <section class="seccion seccion-alterna" id="trabajo">
+            <div class="seccion-cabeza">
+                <span class="etiqueta etiqueta-clara">Nuestro trabajo</span>
+                <h2>¿Cómo funciona?</h2>
+            </div>
+            <div class="tarjetas">
+                <article class="tarjeta">
+                    <div class="tarjeta-icono">🔎</div>
+                    <h3>Buscá</h3>
+                    <p>Elegí el rubro que necesitás: electricidad, plomería, pintura, carpintería y más.</p>
+                </article>
+                <article class="tarjeta">
+                    <div class="tarjeta-icono">📍</div>
+                    <h3>Ubicá</h3>
+                    <p>Mirá en el mapa los profesionales disponibles cerca de tu domicilio.</p>
+                </article>
+                <article class="tarjeta">
+                    <div class="tarjeta-icono">✅</div>
+                    <h3>Seguí</h3>
+                    <p>Controlá el estado de cada trabajo y calificá al profesional al terminar.</p>
+                </article>
+            </div>
+        </section>
+
+        <!--ACA empieza el Demo-->
+        <section class="seccion" id="demo">
+            <div class="seccion-cabeza">
+                <span class="etiqueta etiqueta-clara">Demo</span>
+                <h2>Encontrá tu ubicación</h2>
+                <p>Usá la lupa del mapa para buscar una dirección dentro de Rosario.</p>
+            </div>
+            <div class="mapa-marco">
+                <div id="map"></div>
+                <div class="mapa-aviso" id="mapaAviso" role="status"></div>
+            </div>
+        </section>
+    </main>
+
+    <!--CONTACTO-->
+    <footer class="pie" id="contacto">
+        <div class="pie-contenido">
+            <div>
+                <span class="marca-texto">Servi<b>Track</b></span>
+                <p>Tus trabajos, bajo control.</p>
+            </div>
+            <div>
+                <h3>Contacto</h3>
+                <p>Rosario, Santa Fe</p>
+                <p>contacto@servitrack.com</p>
+            </div>
+        </div>
+        <p class="pie-copy">© 2026 ServiTrack</p>
+    </footer>
+
+    <!--ACA esta el link para js: los primeros son para que funcione el mapa del DEMO-->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Plugin geocoder (versión fija para que no se rompa con actualizaciones) -->
+    <script src="https://unpkg.com/leaflet-control-geocoder@2.4.0/dist/Control.Geocoder.js"></script>
+    <script src="./js/mapa.js"></script>
+    <script src="./js/script.js"></script>
+    <script src="./js/carrusel.js"></script>
+</body>
+
+</html>

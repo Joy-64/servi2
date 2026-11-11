@@ -1,0 +1,147 @@
+<!doctype html>
+<!--
+  CargaDeClientes.html
+  Formulario para registrar un cliente.
+  Sin JavaScript: al apretar el botón los datos se envían por POST a CargaDeClientes.php,
+  que los valida y muestra un resumen.
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cargar cliente | ServiTrack</title>
+    <link rel="icon" href="./img/logo3.0.jpeg" />
+    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="stylesheet" href="css/formularios.css" />
+  </head>
+  <body>
+    <!-- Cabecera: logo y menú, igual en todas las páginas -->
+    <header>
+      <div class="header-logo">
+        <a href="inicio.html">
+          <img src="./img/logo2.0.png" width="200px" height="100px" alt="Logo ServiTrack" />
+        </a>
+      </div>
+      <button id="menu-btn"><img src="./img/menu.png" width="20px" height="20px" alt="menu" /></button>
+      <nav class="header-nav" id="menu">
+        <ul>
+          <li><a class="items-menu" href="/php/panel.php">Panel</a></li>
+          <li><a class="items-menu" href="/CargaDeTrabajo.html">Cargar trabajo</a></li>
+          <li><a class="items-menu" href="/CargaDeClientes.html">Cargar cliente</a></li>
+          <li><a class="items-menu" href="/php/trabajos.php">Trabajos</a></li>
+        </ul>
+      </nav>
+      <div class="header-boton"><button class="boton"><a class="login" href="">Acceso</a></button></div>
+    </header>
+
+    <main class="formulario">
+      <!-- Atajos siempre visibles (el menú de arriba se esconde en pantallas angostas) -->
+      <p class="atajos"><a href="/php/panel.php">← Panel</a> <a href="/php/trabajos.php">Ver todos los trabajos</a></p>
+      <h1>Cargar cliente</h1>
+
+      <!-- action = a dónde se envían los datos. method="post" = viajan ocultos, no en la URL.
+           Cada campo con "name" llega a PHP como $_POST["name"] -->
+      <form action="/php/CargaDeClientes.php" method="post">
+
+        <!-- Sección 1: datos principales -->
+        <fieldset>
+          <legend>Datos principales</legend>
+
+          <div class="campo">
+            <label for="Nombre">Nombre *</label>
+            <!-- required: el navegador no deja enviar si está vacío -->
+            <input type="text" name="Nombre" id="Nombre" maxlength="50" required />
+          </div>
+
+          <div class="campo">
+            <label for="Tipo">Tipo de cliente</label>
+            <select name="Tipo" id="Tipo">
+              <option value="particular">Particular</option>
+              <option value="empresa">Empresa</option>
+              <option value="consorcio">Consorcio</option>
+            </select>
+          </div>
+
+          <!-- Se completa solo si el tipo es empresa o consorcio -->
+          <div class="campo">
+            <label for="RazonSocial">Razón social (solo empresa o consorcio)</label>
+            <input type="text" name="RazonSocial" id="RazonSocial" maxlength="100" />
+          </div>
+        </fieldset>
+
+        <!-- Sección 2: contacto -->
+        <fieldset>
+          <legend>Contacto</legend>
+
+          <div class="fila">
+            <div class="campo">
+              <label for="Telefono">Teléfono</label>
+              <input type="tel" name="Telefono" id="Telefono" maxlength="20" />
+            </div>
+            <div class="campo">
+              <label for="Whatsapp">WhatsApp (si queda vacío se usa el teléfono)</label>
+              <input type="tel" name="Whatsapp" id="Whatsapp" maxlength="20" />
+            </div>
+          </div>
+
+          <div class="campo">
+            <label for="Mail">Mail</label>
+            <!-- type="email": el navegador revisa que tenga formato de mail -->
+            <input type="email" name="Mail" id="Mail" maxlength="100" />
+          </div>
+        </fieldset>
+
+        <!-- Sección 3: dirección (una sola) -->
+        <fieldset>
+          <legend>Dirección</legend>
+          <div class="fila">
+            <div class="campo">
+              <label for="Direccion">Calle y número *</label>
+              <input type="text" name="Direccion" id="Direccion" maxlength="100" required />
+            </div>
+            <div class="campo">
+              <label for="Ciudad">Ciudad *</label>
+              <input type="text" name="Ciudad" id="Ciudad" maxlength="60" required />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Sección 4: otros datos -->
+        <fieldset>
+          <legend>Otros</legend>
+          <div class="campo">
+            <label for="Observaciones">Observaciones</label>
+            <textarea name="Observaciones" id="Observaciones" rows="3" placeholder="Ej: tocar timbre del fondo"></textarea>
+          </div>
+          <div class="campo">
+            <!-- checked: viene marcada. Si se marca, PHP recibe Activo = 1 -->
+            <label><input type="checkbox" name="Activo" value="1" checked /> Cliente activo</label>
+          </div>
+        </fieldset>
+
+        <div class="botones">
+          <!-- Cuando se conecte la base, este botón pasa a decir "Guardar cliente" -->
+          <button type="submit" class="boton">Revisar cliente</button>
+          <button type="reset" class="boton boton-sec">Limpiar</button>
+        </div>
+      </form>
+    </main>
+
+    <!-- Pie de página, igual en todas las páginas -->
+    <footer class="footer">
+      <div class="footer-logo">
+        <a href="inicio.html">
+          <img src="./img/logo 2.1.png" width="100px" height="100px" alt="Logo ServiTrack" />
+        </a>
+      </div>
+      <nav class="foot-enlace">
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="quienes-somos.html">Quienes somos</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <p class="derechos">&copy; 2026 | ServiTrack. Todos los derechos reservados.</p>
+    </footer>
+
+  </body>
+</html>

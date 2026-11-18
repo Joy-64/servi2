@@ -1,0 +1,258 @@
+/* trabajos.css
+   Estilos de trabajos.php: pestañas, buscador, resumen, tabla y etiquetas.
+   Va DESPUÉS de style.css porque usa sus variables de color.
+   Conceptos: Flexbox, flex-wrap, clamp(), tablas, clases para estados.
+
+   CAMBIOS DE ESTA VERSIÓN (para que se adapte al tamaño de pantalla):
+   - Ancho máximo más grande y márgenes con clamp().
+   - Las cajas del resumen usan flex-basis + wrap: bajan solas de renglón.
+   - Se quitó el @media del resumen: ya no hace falta. */
+
+
+/* ---------- Contenedor central ---------- */
+.pagina-trabajos {
+    max-width: 1280px;                              /* en monitores grandes no se estira más */
+    margin: clamp(1rem, 3vw, 2rem) auto;            /* clamp(mín, ideal, máx): margen que se adapta */
+    padding: 0 clamp(.75rem, 3vw, 2rem);            /* espacio a los costados que se adapta */
+    font-family: var(--texto);
+}
+
+.pagina-trabajos h1 {
+    font-family: var(--titulos);
+    color: var(--azul-oscuro);
+    margin-bottom: 1rem;
+}
+
+.pagina-trabajos h2 {
+    font-family: var(--subtitulo);
+    color: var(--azul-oscuro);
+    font-size: 1.15rem;
+    margin-bottom: .75rem;
+}
+
+
+/* ---------- Pestañas: enlaces en fila; la activa se pinta de azul oscuro ---------- */
+.pestanas {
+    display: flex;
+    gap: .5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;            /* si no entran en un renglón, bajan */
+}
+
+.pestanas a {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: var(--blanco-suave);
+    border: 1px solid var(--gris-oscuro);
+    color: var(--negro-suave);
+}
+
+.pestanas a.activa {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco-suave);
+}
+
+
+/* ---------- Buscador ---------- */
+.buscador {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    flex-wrap: wrap;            /* en celular los controles bajan de renglón */
+    margin-bottom: 1rem;
+}
+
+.buscador input[type="text"] {
+    padding: 8px;
+    border: 1px solid var(--gris-oscuro);
+    border-radius: 6px;
+}
+
+.buscador a.boton {
+    color: var(--negro-suave);
+}
+
+.boton-sec {
+    background-color: var(--gris-claro);
+}
+
+/* Selector de orden */
+.buscador select {
+    padding: 8px;
+    border: 1px solid var(--gris-oscuro);
+    border-radius: 6px;
+}
+
+
+/* ---------- Resumen: cajas en fila ---------- */
+.resumen-lista {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.dato {
+    /* flex: 1 1 150px = crece (1), se puede achicar (1) y parte de una base de 150px.
+       Con flex-wrap en el contenedor, las cajas se reparten el renglón y bajan cuando no entran.
+       En celular quedan de a 2 por renglón en vez de 4 cajas apiladas ocupando mucho alto. */
+    flex: 1 1 150px;
+    background-color: var(--azul-oscuro);
+    color: var(--blanco-suave);
+    border-radius: 10px;
+    padding: .85rem 1rem;
+}
+
+.dato strong {
+    display: block;
+    font-family: var(--titulos);
+    font-size: clamp(1.1rem, 3vw, 1.4rem);     /* el número se adapta a la pantalla */
+}
+
+/* El pendiente de cobro se destaca en violeta */
+.dato-cobro {
+    background-color: var(--violeta);
+}
+
+
+/* ---------- Tabla ---------- */
+/* Si la pantalla es angosta, la tabla se desplaza dentro de su caja (overflow-x: auto)
+   en lugar de romper la página. */
+.tabla-contenedor {
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--blanco-suave);
+}
+
+.tabla th,
+.tabla td {
+    padding: clamp(6px, 1vw, 10px);     /* el relleno de cada celda se achica en pantallas chicas */
+    text-align: left;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.tabla th {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco-suave);
+    font-family: var(--subtitulo);
+}
+
+/* Trabajo atrasado: toda la fila con fondo rojizo */
+.fila-atrasada {
+    background-color: #fdecec;
+}
+
+
+/* ---------- Etiquetas de estado y de cobro ---------- */
+.etiqueta {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 2px 10px;
+    white-space: nowrap;
+}
+
+.etiqueta-verde   { background-color: var(--verde);   color: var(--negro-suave); }
+.etiqueta-violeta { background-color: var(--violeta); color: var(--blanco-suave); }
+.etiqueta-roja    { background-color: #b91c1c;        color: var(--blanco-suave); }
+.etiqueta-naranja { background-color: #f59e0b;        color: var(--negro-suave); }
+
+
+/* ---------- Total por cliente ---------- */
+.por-cliente {
+    background-color: var(--blanco-suave);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.por-cliente li {
+    display: flex;
+    justify-content: space-between;     /* nombre a la izquierda, monto a la derecha */
+    gap: 1rem;
+    padding: .5rem 0;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.vacio {
+    color: var(--gris-oscuro);
+    margin-bottom: 1.5rem;
+}
+
+
+/* ---------- Atajos de navegación en el cuerpo de la página ---------- */
+.atajos {
+    display: flex;
+    flex-wrap: wrap;            /* en celular los enlaces bajan de renglón */
+    gap: .5rem 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.atajos a {
+    color: var(--azul-intermedio);
+    text-decoration: underline;
+}
+
+/* Mensaje de aviso (por ejemplo: "Trabajo modificado") */
+.aviso {
+    background-color: var(--blanco-suave);
+    border-left: 5px solid var(--verde);
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+
+/* ---------- Botones chicos de la columna Acciones ---------- */
+.acciones-celda {
+    min-width: 170px;
+}
+
+.acciones-celda form {
+    margin-top: .4rem;
+}
+
+.btn-mini {
+    display: inline-block;
+    padding: 4px 10px;
+    border: 1px solid var(--azul-oscuro);
+    border-radius: 6px;
+    background-color: var(--azul-claro);
+    color: var(--negro-suave);
+    font-family: var(--texto);
+    font-size: .9rem;
+    cursor: pointer;
+}
+
+.btn-mini:hover {
+    background-color: var(--verde);
+}
+
+
+/* ---------- Encabezados que ordenan la tabla ---------- */
+/* Cada título de columna es un enlace (<a class="orden-link">). Hereda el color blanco del <th>
+   (color: inherit) para que no se vea como un enlace común. */
+.tabla th a.orden-link {
+    display: block;             /* todo el título es clicable, no solo las letras */
+    color: inherit;
+    white-space: nowrap;        /* el título y su flecha ▲▼ no se parten en dos renglones */
+}
+
+/* Al pasar el mouse se subraya, así se nota que se puede tocar */
+.tabla th a.orden-link:hover {
+    text-decoration: underline;
+}
+
+/* La columna por la que está ordenada la tabla se pinta de verde */
+.tabla th a.orden-link.activa {
+    color: var(--verde);
+}
+
+/* Contorno visible al navegar con la tecla Tab (accesibilidad) */
+.tabla th a.orden-link:focus-visible {
+    outline: 3px solid var(--azul-claro);
+    outline-offset: 2px;
+}

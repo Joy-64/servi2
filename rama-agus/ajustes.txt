@@ -1,0 +1,1 @@
+Terminar de resolver los errores de conexion entre la base de datos y el panel de usuarios
